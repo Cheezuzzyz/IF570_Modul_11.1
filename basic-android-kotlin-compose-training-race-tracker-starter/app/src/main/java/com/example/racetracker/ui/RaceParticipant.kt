@@ -62,3 +62,11 @@ class RaceParticipant(
  */
 val RaceParticipant.progressFactor: Float
     get() = currentProgress / maxProgress.toFloat()
+
+    @Test
+    fun raceParticipant_RaceFinished_ProgressUpdated() = runTest {
+        launch { raceParticipant.run() }
+        advanceTimeBy(raceParticipant.maxProgress * raceParticipant.progressDelayMillis)
+        runCurrent()
+        assertEquals(100, raceParticipant.currentProgress)
+    }
